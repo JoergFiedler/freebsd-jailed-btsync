@@ -1,0 +1,5 @@
+rdr pass log on {{ host_net_ext_if }} proto {udp,tcp} \
+   from any \
+   to {{ host_net_ext_ip }} port { {{ btsync_port }},{{ btsync_webui_port }} } \
+   -> {{ jail_net_ip }}
+

@@ -1,0 +1,43 @@
+---
+- name: Install btsync
+  pkgng:
+    name: 'btsync'
+    state: present
+    chroot: '{{ jail_home.stdout }}'
+
+- name: Copy btsync configuration
+  template:
+    src: 'btsync.conf.j2'
+    dest: '{{ jail_home.stdout }}/usr/local/etc/btsync.conf'
+
+- name: Create directories for btsync instance
+  file:
+    path: '{{ btsync_home_host_zfs_dir }}/{{ item }}'
+    state: directory
+  with_items:
+    - 'sync'
+    - '.sync'
+
+- name: Enable service
+  lineinfile:
+    dest: '{{ jail_home.stdout }}/etc/rc.conf'
+    state: present
+    regexp: '^btsync_enable='
+    line: 'btsync_enable="YES"'
+
+- name: Backup btsync home with tarsnap
+  template:
+    src: 'tarsnapper.yml.j2'
+    dest: '/usr/local/etc/tarsnapper.d/btsync-{{ jail_name }}.yml'
+  when: tarsnap_keyfile is defined and (btsync_tarsnap | default(false))
+
+- name: Copy btsync instance key
+  copy:
+    src: '{{ item }}'
+    dest: '{{ jail_home.stdout }}{{ btsync_home }}/{{ item }}'
+  with_items:
+    - 'server-key.pem'
+    - 'server-certbundle.pem'
+  notify:
+  - Reload jail s btsync
+

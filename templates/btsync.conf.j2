@@ -1,0 +1,36 @@
+{
+  "device_name":     "moumantai.de",
+  "listening_port":  20222,
+  "storage_path" : "{{ btsync_home }}/.sync",
+
+  "pid_file" : "/var/run/btsync/btsync.pid",
+
+  "use_upnp" : false,
+
+  "download_limit" : 0,
+  "upload_limit" : 0,
+
+  "webui" :
+  {
+    "listen" : "{{ jail_net_ip }}:{{ btsync_webui_port }}",
+    "login" : "{{ btsync_webui_login }}",
+    "password_hash" : "{{ btsync_webui_password_hash }}",
+    "allow_empty_password" : false,
+    "force_https" : true,
+    "ssl_certificate" : "{{ btsync_home }}/server-certbundle.pem",
+    "ssl_private_key" : "{{ btsync_home }}/server-key.pem",
+    "directory_root" : "{{ btsync_home }}/sync"
+  },
+
+/*
+   Advanced preferences can be added to config file.
+   Info is available at
+   "http://help.getsync.com/customer/portal/articles/1902048-sync-advanced-preferences--more-options"
+   For example see folder_rescan_interval below
+*/
+  "send_statistics": false,
+  "folder_defaults.use_lan_broadcast": false,
+  "folder_defaults.use_relay" : false,
+  "folder_defaults.use_tracker" : true,
+  "folder_defaults.delete_to_trash": false
+}

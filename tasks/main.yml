@@ -1,0 +1,4 @@
+---
+# tasks file for freebsd-jailed-btsync
+- include: zfs.yml
+- include: btsync.yml

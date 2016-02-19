@@ -1,0 +1,29 @@
+---
+- name: Create btsync s ZFS dataset s mount point
+  file:
+    path: '{{ btsync_home_host_zfs_dir }}'
+    state: directory
+
+- name: Create btsync ZFS dataset
+  zfs:
+    name: '{{ host_zfs_btsync_dataset }}'
+    state: present
+    atime: 'off'
+    mountpoint: '{{ host_zfs_btsync_dir }}'
+
+- name: Create btsync instance s ZFS dataset
+  zfs:
+    name: '{{ btsync_home_host_zfs_dataset }}'
+    state: present
+    atime: 'off'
+    mountpoint: '{{ btsync_home_host_zfs_dir }}'
+
+- name: Configure jail to mount file system from host
+  mount:
+    name: '{{ jail_home.stdout }}{{ btsync_home }}'
+    fstab: '{{ jail_home.stdout }}/../fstab'
+    fstype: 'nullfs'
+    opts: 'rw'
+    src: '{{ btsync_home_host_zfs_dir }}'
+    state: present
+
