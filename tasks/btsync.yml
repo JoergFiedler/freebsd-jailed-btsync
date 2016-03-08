@@ -34,7 +34,7 @@
 - name: Copy btsync instance key
   copy:
     src: '{{ item }}'
-    dest: '{{ jail_home.stdout }}{{ btsync_home }}/{{ item }}'
+    dest: '{{ btsync_home_host_zfs_dir }}/{{ item }}'
   with_items:
     - 'btsync-server-key.pem'
     - 'btsync-server-certbundle.pem'

@@ -18,6 +18,11 @@
     atime: 'off'
     mountpoint: '{{ btsync_home_host_zfs_dir }}'
 
+- name: Create btsync instance's mountpoint
+  file:
+    path: '{{ jail_home.stdout }}{{ btsync_home }}'
+    state: directory
+
 - name: Configure jail to mount file system from host
   mount:
     name: '{{ jail_home.stdout }}{{ btsync_home }}'
