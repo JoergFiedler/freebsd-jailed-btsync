@@ -36,8 +36,8 @@
     src: '{{ item }}'
     dest: '{{ jail_home.stdout }}{{ btsync_home }}/{{ item }}'
   with_items:
-    - 'server-key.pem'
-    - 'server-certbundle.pem'
+    - 'btsync-server-key.pem'
+    - 'btsync-server-certbundle.pem'
   notify:
   - Reload jail s btsync
 
