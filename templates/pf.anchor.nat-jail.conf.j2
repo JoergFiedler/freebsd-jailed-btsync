@@ -1,7 +1,5 @@
-nat pass log on {{ host_net_ext_if }} proto tcp \
-   from {{ jail_net_ip }} \
-   to config.usyncapp.com port {http,https}
-
 nat pass log on {{ host_net_ext_if }} proto {tcp,udp} \
-   from {{ jail_net_ip }} \
-   to t.usyncapp.com port 3000
+  from {{ jail_net_ip }} \
+  to any \
+  -> {{ host_next_ext_ip }}
+
