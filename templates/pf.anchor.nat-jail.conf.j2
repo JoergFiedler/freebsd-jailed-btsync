@@ -1,5 +1,5 @@
 nat pass log on {{ host_net_ext_if }} proto {tcp,udp} \
   from {{ jail_net_ip }} \
   to any \
-  -> {{ host_next_ext_ip }}
+  -> {{ host_net_ext_ip }}
 
