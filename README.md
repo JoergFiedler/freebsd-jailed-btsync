@@ -29,6 +29,12 @@ The port for btsync's web ui. This is the hosts external port as well as the por
 ##### btsync_webui_login
 The user name allowed to login. Default: `'admin'`.
 
+##### btsync_server_certbundle
+The servers certificate as well as required intermediate certificates for the web ui. Default: 'btsync_server_certbundle.pem`.
+
+##### btsync_server_key
+The servers key used to secure the web ui. Default: 'btsync_server_key.pem`.
+
 ##### btsync_webui_password_hash
 The user's password hash. To create a password hash type `openssl passwd -crypt PASSWORD`. Default: `'mfKUcqy7pdU4I'` (passwd).
 

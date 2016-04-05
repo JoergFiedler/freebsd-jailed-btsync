@@ -36,8 +36,8 @@
     src: '{{ item }}'
     dest: '{{ btsync_home_host_zfs_dir }}/{{ item }}'
   with_items:
-    - 'btsync-server-key.pem'
-    - 'btsync-server-certbundle.pem'
+    - {{ btsync_server_key }}
+    - {{ btsync_server_certbundle }}
   notify:
   - Reload jail s btsync
 
