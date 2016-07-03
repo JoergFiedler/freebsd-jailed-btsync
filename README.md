@@ -20,14 +20,19 @@ Role Variables
 ##### btsync_home
 Home diretory for btsync within the jail. Default: `'/srv/btsync'`.
 
+##### btsync_home_host_zfs_dataset
+The ZFS dataset for this particular instance. Default: `'{{ host_zfs_btsync_dataset }}/{{ jail_name }}'`.
+
+##### btsync_home_host_zfs_dir
+The ZFS dataset mountpoint for this particular instance. Default: `'{{ host_zfs_btsync_dir }}/{{ jail_name }}'`.
+
 ##### btsync_port
 The port this btsync instance listens on. This is the hosts external port as well as the port used by btsync within the jail. A pf rdr rule is created to redirect the traffic to the jail. Default: `'10202'`.
 
-##### btsync_webui_port
-The port for btsync's web ui. This is the hosts external port as well as the port used by btsync within the jail. A pf rdr rule is created to redirect the traffic to the jail. Default: `'20202'`.
+##### btsync_tarsnap
+Backup btsycn instance's data using tarsnap. Default: '`false`'.
 
-##### btsync_webui_login
-The user name allowed to login. Default: `'admin'`.
+Needs tarsnap enabled on the host system.
 
 ##### btsync_server_certbundle
 The servers certificate as well as required intermediate certificates for the web ui. Default: 'btsync_server_certbundle.pem`.
@@ -35,20 +40,20 @@ The servers certificate as well as required intermediate certificates for the we
 ##### btsync_server_key
 The servers key used to secure the web ui. Default: 'btsync_server_key.pem`.
 
+##### btsync_webui_login
+The user name allowed to login. Default: `'admin'`.
+
 ##### btsync_webui_password_hash
-The user's password hash. To create a password hash type `openssl passwd -crypt PASSWORD`. Default: `'mfKUcqy7pdU4I'` (passwd).
+The user's password hash. To create a password hash type `openssl passwd -crypt PASSWORD`. Default: `'mfKUcqy7pdU4I'` (admin).
+
+##### btsync_webui_port
+The port for btsync's web ui. This is the hosts external port as well as the port used by btsync within the jail. A pf rdr rule is created to redirect the traffic to the jail. Default: `'20202'`.
 
 ##### host_zfs_btsync_dataset
 The ZFS dataset for btsync on the host. Default: `'{{ host_srv_dataset }}/btsync'`.
 
 ##### host_zfs_btsync_dir
 The btsync's ZFS dataset mountpoint on the host. Default: `'{{ host_srv_dir }}/btsync'`.
-
-##### btsync_home_host_zfs_dataset
-The ZFS dataset for this particular instance. Default: `'{{ host_zfs_btsync_dataset }}/{{ jail_name }}'`.
-
-##### btsync_home_host_zfs_dir
-The ZFS dataset mountpoint for this particular instance. Default: `'{{ host_zfs_btsync_dir }}/{{ jail_name }}'`.
 
 Dependencies
 ------------
@@ -61,7 +66,7 @@ Example Playbook
     - { role: JoergFiedler.freebsd-jailed-btsync,
         tags: ['btsync'],
         use_ssmtp: true,
-        use_syslogd_server: true,
+        use_syslogd_server: false,
         jail_name: 'btsync',
         jail_net_ip: '10.1.0.6' }
 

@@ -7,6 +7,7 @@ btsync_webui_login: 'admin'
 btsync_webui_password_hash: 'mfKUcqy7pdU4I'
 btsync_server_key: 'btsync-server-key.pem'
 btsync_server_certbundle: 'btsync-server-certbundle.pem'
+btsync_tarsnap: false
 
 host_zfs_btsync_dataset: '{{ host_srv_dataset }}/btsync'
 host_zfs_btsync_dir: '{{ host_srv_dir }}/btsync'
