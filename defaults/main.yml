@@ -1,16 +1,15 @@
 ---
 # defaults file for freebsd-jailed-btsync
 btsync_home: '/srv/btsync'
-btsync_port: 10202
-btsync_webui_port: 20202
+btsync_port: 10101
+btsync_webui_port: 80
 btsync_webui_login: 'admin'
-btsync_webui_password_hash: 'mfKUcqy7pdU4I'
-btsync_server_key: 'btsync-server-key.pem'
-btsync_server_certbundle: 'btsync-server-certbundle.pem'
-btsync_tarsnap: false
+btsync_webui_password_hash: ''
+btsync_tarsnap_enabled: false
 
 host_zfs_btsync_dataset: '{{ host_srv_dataset }}/btsync'
 host_zfs_btsync_dir: '{{ host_srv_dir }}/btsync'
+
 btsync_home_host_zfs_dataset: '{{ host_zfs_btsync_dataset }}/{{ jail_name }}'
 btsync_home_host_zfs_dir: '{{ host_zfs_btsync_dir }}/{{ jail_name }}'
 

@@ -1,4 +1,4 @@
-nat pass log on {{ host_net_ext_if }} proto {tcp,udp} \
+nat pass log on {{ host_net_ext_if }} proto { tcp, udp } \
   from {{ jail_net_ip }} \
   to any \
   -> {{ host_net_ext_ip }}

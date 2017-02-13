@@ -14,6 +14,9 @@
   file:
     path: '{{ btsync_home_host_zfs_dir }}/{{ item }}'
     state: directory
+    owner: 817
+    group: 817
+    mode: 0750
   with_items:
     - 'sync'
     - '.sync'
@@ -29,15 +32,4 @@
   template:
     src: 'tarsnapper.yml.j2'
     dest: '/usr/local/etc/tarsnapper.d/btsync-{{ jail_name }}.yml'
-  when: tarsnap_enabled and btsync_tarsnap
-
-- name: Copy btsync instance key
-  copy:
-    src: '{{ item }}'
-    dest: '{{ btsync_home_host_zfs_dir }}/{{ item }}'
-  with_items:
-    - '{{ btsync_server_key }}'
-    - '{{ btsync_server_certbundle }}'
-  notify:
-  - Reload jail s btsync
-
+  when: tarsnap_enabled and btsync_tarsnap_enabled
