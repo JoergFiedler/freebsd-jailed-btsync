@@ -1,10 +1,10 @@
 ---
 # defaults file for freebsd-jailed-btsync
 btsync_home: '/srv/btsync'
-btsync_port: 10101
-btsync_webui_port: 80
+btsync_port: 10100
+btsync_webui_port: 10080
 btsync_webui_login: 'admin'
-btsync_webui_password_hash: ''
+btsync_webui_password_hash: 'mfKUcqy7pdU4I'
 btsync_tarsnap_enabled: false
 
 host_zfs_btsync_dataset: '{{ host_srv_dataset }}/btsync'
