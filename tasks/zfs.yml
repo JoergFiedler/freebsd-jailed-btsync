@@ -1,34 +1,35 @@
 ---
-- name: Create btsync s ZFS dataset s mount point
+- name: Create rslsync s ZFS dataset s mount point
   file:
-    path: '{{ btsync_home_host_zfs_dir }}'
+    path: '{{ rslsync_home_host_zfs_dir }}'
     state: directory
 
-- name: Create btsync ZFS dataset
+- name: Create rslsync ZFS dataset
   zfs:
-    name: '{{ host_zfs_btsync_dataset }}'
+    name: '{{ host_zfs_rslsync_dataset }}'
     state: present
-    atime: 'off'
-    mountpoint: '{{ host_zfs_btsync_dir }}'
+    extra_zfs_properties:
+      atime: 'off'
+      mountpoint: '{{ host_zfs_rslsync_dir }}'
 
-- name: Create btsync instance s ZFS dataset
+- name: Create rslsync instance s ZFS dataset
   zfs:
-    name: '{{ btsync_home_host_zfs_dataset }}'
+    name: '{{ rslsync_home_host_zfs_dataset }}'
     state: present
-    atime: 'off'
-    mountpoint: '{{ btsync_home_host_zfs_dir }}'
+    extra_zfs_properties:
+      atime: 'off'
+      mountpoint: '{{ rslsync_home_host_zfs_dir }}'
 
-- name: Create btsync instance's mountpoint
+- name: Create rslsync instance's mountpoint
   file:
-    path: '{{ jail_home.stdout }}{{ btsync_home }}'
+    path: '{{ jail_home.stdout }}{{ rslsync_home }}'
     state: directory
 
 - name: Configure jail to mount file system from host
   mount:
-    name: '{{ jail_home.stdout }}{{ btsync_home }}'
+    name: '{{ jail_home.stdout }}{{ rslsync_home }}'
     fstab: '{{ jail_home.stdout }}/../fstab'
     fstype: 'nullfs'
     opts: 'rw'
-    src: '{{ btsync_home_host_zfs_dir }}'
+    src: '{{ rslsync_home_host_zfs_dir }}'
     state: present
-

@@ -1,0 +1,40 @@
+---
+- name: Install rslsync
+  pkgng:
+    name: 'rslsync'
+    state: present
+    chroot: '{{ jail_home.stdout }}'
+  register: pkg_result
+  until: pkg_result is succeeded
+
+- name: Copy rslsync configuration
+  template:
+    backup: '{{ jail_backup_old_files }}'
+    src: 'rslsync.conf.j2'
+    dest: '{{ jail_home.stdout }}/usr/local/etc/rslsync.conf'
+
+- name: Create directories for rslsync instance
+  file:
+    path: '{{ rslsync_home_host_zfs_dir }}/{{ item }}'
+    state: directory
+    owner: 817
+    group: 817
+    mode: 0750
+  loop:
+    - 'sync'
+    - '.sync'
+
+- name: Enable service
+  lineinfile:
+    backup: '{{ jail_backup_old_files }}'
+    dest: '{{ jail_home.stdout }}/etc/rc.conf'
+    state: present
+    regexp: '^rslsync_enable='
+    line: 'rslsync_enable="YES"'
+
+- name: Backup rslsync home with tarsnap
+  template:
+    backup: '{{ jail_backup_old_files }}'
+    src: 'tarsnapper.yml.j2'
+    dest: '/usr/local/etc/tarsnapper.d/rslsync-{{ jail_name }}.yml'
+  when: tarsnap_enabled and rslsync_tarsnap_enabled

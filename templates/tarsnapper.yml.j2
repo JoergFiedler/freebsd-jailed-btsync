@@ -1,4 +1,4 @@
 ---
-{{ btsync_home_host_zfs_dir | replace('/', '_') | replace('.', '_') }}:
+{{ rslsync_home_host_zfs_dir | replace('/', '_') | replace('.', '_') }}:
   delta: default
-  source: '{{ btsync_home_host_zfs_dir }}'
+  source: '{{ rslsync_home_host_zfs_dir }}'

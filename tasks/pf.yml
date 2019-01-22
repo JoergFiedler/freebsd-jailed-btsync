@@ -1,6 +1,7 @@
 ---
 - name: Copy pf configuration (nat rules)
   template:
+    backup: '{{ jail_backup_old_files }}'
     src: 'pf.anchor.nat-jail.conf.j2'
     dest: '/etc/pf.anchor.nat-jail.{{ jail_name }}.conf'
   notify:
@@ -8,6 +9,7 @@
 
 - name: Add pf configuration to anchor.nat-jail conf
   lineinfile:
+    backup: '{{ jail_backup_old_files }}'
     dest: '/etc/pf.anchor.nat-jail.conf'
     state: present
     line: 'include "/etc/pf.anchor.nat-jail.{{ jail_name }}.conf"'
@@ -16,6 +18,7 @@
 
 - name: Copy pf configuration (rdr rules)
   template:
+    backup: '{{ jail_backup_old_files }}'
     src: 'pf.anchor.rdr-jail.conf.j2'
     dest: '/etc/pf.anchor.rdr-jail.{{ jail_name }}.conf'
   notify:
@@ -23,6 +26,7 @@
 
 - name: Add pf configuration to anchor.rdr-jail conf
   lineinfile:
+    backup: '{{ jail_backup_old_files }}'
     dest: '/etc/pf.anchor.rdr-jail.conf'
     state: present
     line: 'include "/etc/pf.anchor.rdr-jail.{{ jail_name }}.conf"'

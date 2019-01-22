@@ -1,15 +1,15 @@
 ---
-# defaults file for freebsd-jailed-btsync
-btsync_home: '/srv/btsync'
-btsync_port: 10100
-btsync_webui_port: 10080
-btsync_webui_login: 'admin'
-btsync_webui_password_hash: 'mfKUcqy7pdU4I'
-btsync_tarsnap_enabled: false
+# defaults file for freebsd-jailed-rslsync
+rslsync_device_name: 'default'
+rslsync_home: '/srv/rslsync'
+rslsync_port: 10100
+rslsync_tarsnap_enabled: false
+rslsync_webui_login: 'admin'
+rslsync_webui_password_hash: 'mfKUcqy7pdU4I'
+rslsync_webui_port: 10080
 
-host_zfs_btsync_dataset: '{{ host_srv_dataset }}/btsync'
-host_zfs_btsync_dir: '{{ host_srv_dir }}/btsync'
+host_zfs_rslsync_dataset: '{{ host_srv_dataset }}/rslsync'
+host_zfs_rslsync_dir: '{{ host_srv_dir }}/rslsync'
 
-btsync_home_host_zfs_dataset: '{{ host_zfs_btsync_dataset }}/{{ jail_name }}'
-btsync_home_host_zfs_dir: '{{ host_zfs_btsync_dir }}/{{ jail_name }}'
-
+rslsync_home_host_zfs_dataset: '{{ host_zfs_rslsync_dataset }}/{{ jail_name }}'
+rslsync_home_host_zfs_dir: '{{ host_zfs_rslsync_dir }}/{{ jail_name }}'

@@ -1,0 +1,27 @@
+dist: xenial
+language: python
+python: 2.7
+install:
+- wget https://releases.hashicorp.com/vagrant/2.2.2/vagrant_2.2.2_x86_64.deb
+- sudo dpkg -i vagrant_2.2.2_x86_64.deb
+- pip install -r .requirements.txt
+before_script:
+- vagrant plugin install vagrant-aws
+- ssh-keygen -y -f ~/.vagrant.d/insecure_private_key > ~/.vagrant.d/insecure_private_key.pub
+- ln -s ./ JoergFiedler.freebsd-jailed-rslsync
+script:
+- ansible-lint .
+- yamllint .
+- ansible-galaxy install -p ./ -r .requirements.yml
+- vagrant box add JoergFiedler/FreeBSD-11.2 --provider aws
+- vagrant up --provider aws
+- host=$(vagrant ssh-config |grep HostName |awk '{print $2}')
+- test $(curl -s -X GET -I -u admin:admin http://${host}:10080/gui/ -w %{http_code}
+  -o /dev/null) == "200"
+- nc -t -z -w 3 ${host} 10100
+after_script:
+- vagrant destroy -f
+env:
+  global:
+  - secure: VGYaHbFZHZWbj8Fvvnvz1KQ6Y1hmfbSr1zwzjZKRCvEwgmJTf4D0voYrahu4RgK97NkIAo3C0gv1ESpizfKZePju2hKnXCeML9yWiB6u7ZL9z05vWeqk3ekbLnYC2pyTeTD4LX2E2M3r1ntOqQLqC7Qn90WEz96Zm2VSdjrcPu47bRpuqTvrq7AhE5i/wUzqAifTd5ulKTtadSzBkLkU0VE/abk818EB79vwA0+FX3CJqipPeXUEhBzj+Qqog6b/fe4i+UqE3m+rf5YWzi9QX1ehGSZ3lcsSKbIu42bdpPtr4tuToDVHPkVCXTFLWnp6Dm8pFsiYji0KgJgJNYcyKQKIZFhwGzDjw+Fh1qNH3CS8Twjp30NOOUlgR2MRScut0+mSwXSl/cuPMefTvX2RQZuT0bmLDV66VFu/Dh2D5qDiG4Jh3fVDov9YJd7r84XuaM/w7wbJxamiVqqSjKNxHWRqe0eAG/KVNaM3/I5HA1VogemaxZ6gFskjInZ1Lji5iBoiouTsF7VGlTL+d9qRxjbc0gFgAiD/hsn2GKvvzsePkjNUbhLy2o5faUoGHpDYLuGVQYUkYauKqReoh1+B2bIJ1l3Ei8Fa/vNnalQgBaE3tyWiRo4KcDhNPVcTa631jsExrKd23xQW9yOZEWCK0v2fVbqkbqdpLyQD3564KK0=
+  - secure: X2PykHzRUapT0CVaBUVMN4GtTOJ3Cb1M3PkxbdME0/uLJ78DnWeqNmuU8ajpZzA+fV+LNHOwsi/TGi5GGCLJXXyvo0gB8xAT3l88qedq1heS+NcULdy3e/0cnJAjpx5LHZV14ztzG+oB4AjZQ2eVMz9KTALple+sxQulGHFN3gls+ThiUy70sF/bjrHN4Z+7w924bxrWEzdR5GCIUHexR59M3FYvs8xUgDQYV9/wfmRmcbg3DZtuw8QTytFzB2DJD4uEJUqlMqk14es+eick6o5v0pJgjbOZBsg30qMXatSbMC/KXkn+EjXuABzh/8npyPp/ev0UdFlSiK6zUs5dXj5QyIIyZmzCC1FrPGPn610OkZjZv8O/5nJp6DKBLQTX4VclG36BRhx3R/tDwLAT1/TBTwR3SXiBilx085Skg1JhTvHEZIZH8g+w/g5O/+tr3K0r4NuCS++GL8c3vXBeYzTU66N4iZyq6OD3yupvQ6Q14kX94E7ukg7O3rAef/EN9yrideSoQjPUpprepn1521XPzrTdzfigxUBGU3n6t8R49oMBtLSdMz6PFYEGIki5SGhE6L96jb6IfwsJ0oDOuK550HlVs03prVu2vp8honT9a+KxWT7Kmladb0jGG/eqPNi0fN0fWxuBf13UH8e3dBLIJ+iQFke7r4SmkD5rTuE=

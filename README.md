@@ -1,16 +1,15 @@
-freebsd-jailed-btsync
+[![Build Status](https://travis-ci.org/JoergFiedler/freebsd-jailed-rslsync.svg?branch=master)](https://travis-ci.org/JoergFiedler/freebsd-jailed-rslsync)
+freebsd-jailed-rslsync
 =========
 
-This role provides a jailed BTSync instance.
+This role provides a jailed Resilio Sync instance.
 
-The free version of btsync is installed. On the host system a btsync dataset
+The free version of Resilio Sync is installed. On the host system a resilio dataset
 is create, if it not exist already. Within this dataset a dataset for this 
 specific instance is created as well. The web ui will be accessible on the 
 configured port. Use user `admin` is allowed to login. Please set an 
-encrypted password via `btsync_webui_password_hash`. To create one please 
+encrypted password via `rslsync_webui_password_hash`. To create one please 
 type `openssl passwd -crypt PASSWORD`.
-
-To see this role in action, have a look at [this project of mine](https://github.com/JoergFiedler/freebsd-ansible-demo).
 
 Requirements
 ------------
@@ -18,66 +17,66 @@ Requirements
 This role is intent to be used with a fresh FreeBSD installation. There is a 
 Vagrant Box with providers for VirtualBox and EC2 you may use.
 
-You will find a sample project which uses this role [here](https://github.com/JoergFiedler/freebsd-ansible-demo).
-
 Role Variables
 --------------
 
-##### btsync_home
-Home diretory for btsync within the jail. Default: `'/srv/btsync'`.
+##### rslsync_home
+Home diretory for resilio within the jail. Default: `'/srv/rslsync'`.
 
-##### btsync_home_host_zfs_dataset
+##### rslsync_home_host_zfs_dataset
 The ZFS dataset for this particular instance. 
-Default: `'{{ host_zfs_btsync_dataset }}/{{ jail_name }}'`.
+Default: `'{{ host_zfs_rslsync_dataset }}/{{ jail_name }}'`.
 
-##### btsync_home_host_zfs_dir
+##### rslsync_home_host_zfs_dir
 The ZFS dataset mountpoint for this particular instance. 
-Default: `'{{ host_zfs_btsync_dir }}/{{ jail_name }}'`.
+Default: `'{{ host_zfs_rslsync_dir }}/{{ jail_name }}'`.
 
-##### btsync_port
-The port this btsync instance listens on. This is the hosts external port as 
-well as the port used by btsync within the jail. A pf rdr rule is created to 
+##### rslsync_port
+The port this resilio instance listens on. This is the hosts external port as 
+well as the port used by Resilio Sync within the jail. A pf rdr rule is created to 
 redirect the traffic to the jail. Default: `'10100'`.
 
-##### btsync_tarsnap
-Backup btsycn instance's data using tarsnap. Default: '`false`'.
+##### rslsync_tarsnap
+Backup Resilio Sync instance's data using tarsnap. Default: '`false`'.
 
 Needs tarsnap enabled on the host system.
 
-##### btsync_webui_login
+##### rslsync_webui_login
 The user name allowed to login. Default: `'admin'`.
 
-##### btsync_webui_password_hash
+##### rslsync_webui_password_hash
 The user's password hash. To create a password hash type `openssl passwd -crypt PASSWORD`. 
 Default: `'mfKUcqy7pdU4I'` (admin).
 
-##### btsync_webui_port
-The port for btsync's web ui. This is the hosts external port as well as the 
-port used by btsync within the jail. A pf rdr rule is created to redirect the 
+##### rslsync_webui_port
+The port for resilio's web ui. This is the hosts external port as well as the 
+port used by Resilio Sync within the jail. A pf rdr rule is created to redirect the 
 traffic to the jail. Default: `'10080'`.
 
-##### host_zfs_btsync_dataset
-The ZFS dataset for btsync on the host. 
-Default: `'{{ host_srv_dataset }}/btsync'`.
+##### host_zfs_rslsync_dataset
+The ZFS dataset for Resilio Sync on the host. 
+Default: `'{{ host_srv_dataset }}/rslsync'`.
 
-##### host_zfs_btsync_dir
-The btsync's ZFS dataset mountpoint on the host. 
-Default: `'{{ host_srv_dir }}/btsync'`.
+##### host_zfs_rslsync_dir
+The Resilio Sync's ZFS dataset mountpoint on the host. 
+Default: `'{{ host_srv_dir }}/rslsync'`.
 
 Dependencies
 ------------
 
-- [JoergFiedler.freebsd-jailed](https://galaxy.ansible.com/detail#/role/6599)
+- [JoergFiedler.freebsd-jailed](https://galaxy.ansible.com/joergfiedler/freebsd-jailed)
 
 Example Playbook
 ----------------
 
-    - { role: JoergFiedler.freebsd-jailed-btsync,
-        tags: ['btsync'],
-        use_ssmtp: true,
-        use_syslogd_server: false,
-        jail_name: 'btsync',
-        jail_net_ip: '10.1.0.6' }
+    - include_role:
+            name: 'JoergFiedler.freebsd-jailed-rslsync'
+          vars:
+            jail_net_ip: '10.1.0.10'
+            jail_name: 'rslsync'
+            jail_freebsd_release: '11.2-RELEASE'
+            jail_build_server_enabled: yes
+            jail_build_server_url: 'http://vastland.moumantai.de/FreeBSD/packages/freebsd-11_2_x64-branches_2018Q4'
 
 License
 -------

@@ -1,5 +1,6 @@
 ---
-# handlers file for freebsd-jailed-btsync
-- name: Reload jail s btsync
-  command: /usr/local/sbin/iocage exec {{ jail_uuid.stdout }} service btsync restart
-  when: jail_created is defined and not jail_created|changed
+# handlers file for freebsd-jailed-rslsync
+- name: Reload jail s rslsync
+  command: |
+    /usr/local/bin/iocage exec {{ jail_uuid.stdout }} service rslsync restart
+  when: jail_created is defined and not jail_created is changed

@@ -1,5 +1,10 @@
 ---
-# tasks file for freebsd-jailed-btsync
-- include: zfs.yml
-- include: btsync.yml
-- include: pf.yml
+- include_tasks: zfs.yml
+  tags:
+    - rslsync
+- include_tasks: rslsync.yml
+  tags:
+    - rslsync
+- include_tasks: pf.yml
+  tags:
+    - rslsync
