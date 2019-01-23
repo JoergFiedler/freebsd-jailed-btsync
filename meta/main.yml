@@ -3,7 +3,7 @@ galaxy_info:
   author: Joerg Fiedler
   description: Provides a jailed Resilio Sync instance server.
   license: BSD
-  min_ansible_version: 2.7
+  min_ansible_version: 2.7.0
   platforms:
     - name: FreeBSD
       versions:
@@ -16,6 +16,7 @@ galaxy_info:
     - ec2
     - rslsync
     - resilio
+    - p2p
 allow_duplicates: yes
 dependencies:
   - JoergFiedler.freebsd-jailed
