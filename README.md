@@ -1,6 +1,7 @@
-[![Build Status](https://travis-ci.org/JoergFiedler/freebsd-jailed-rslsync.svg?branch=master)](https://travis-ci.org/JoergFiedler/freebsd-jailed-rslsync)
 freebsd-jailed-rslsync
 =========
+
+[![Build Status](https://travis-ci.org/JoergFiedler/freebsd-jailed-rslsync.svg?branch=master)](https://travis-ci.org/JoergFiedler/freebsd-jailed-rslsync)
 
 This role provides a jailed Resilio Sync instance.
 
