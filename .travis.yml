@@ -21,6 +21,9 @@ script:
 - nc -t -z -w 3 ${host} 10100
 after_script:
 - vagrant destroy -f
+notifications:
+  webhooks:
+    - https://galaxy.ansible.com/api/v1/notifications/
 env:
   global:
   - secure: VGYaHbFZHZWbj8Fvvnvz1KQ6Y1hmfbSr1zwzjZKRCvEwgmJTf4D0voYrahu4RgK97NkIAo3C0gv1ESpizfKZePju2hKnXCeML9yWiB6u7ZL9z05vWeqk3ekbLnYC2pyTeTD4LX2E2M3r1ntOqQLqC7Qn90WEz96Zm2VSdjrcPu47bRpuqTvrq7AhE5i/wUzqAifTd5ulKTtadSzBkLkU0VE/abk818EB79vwA0+FX3CJqipPeXUEhBzj+Qqog6b/fe4i+UqE3m+rf5YWzi9QX1ehGSZ3lcsSKbIu42bdpPtr4tuToDVHPkVCXTFLWnp6Dm8pFsiYji0KgJgJNYcyKQKIZFhwGzDjw+Fh1qNH3CS8Twjp30NOOUlgR2MRScut0+mSwXSl/cuPMefTvX2RQZuT0bmLDV66VFu/Dh2D5qDiG4Jh3fVDov9YJd7r84XuaM/w7wbJxamiVqqSjKNxHWRqe0eAG/KVNaM3/I5HA1VogemaxZ6gFskjInZ1Lji5iBoiouTsF7VGlTL+d9qRxjbc0gFgAiD/hsn2GKvvzsePkjNUbhLy2o5faUoGHpDYLuGVQYUkYauKqReoh1+B2bIJ1l3Ei8Fa/vNnalQgBaE3tyWiRo4KcDhNPVcTa631jsExrKd23xQW9yOZEWCK0v2fVbqkbqdpLyQD3564KK0=
