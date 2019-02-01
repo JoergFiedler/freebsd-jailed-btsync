@@ -1,10 +1,10 @@
 ---
-- include_tasks: zfs.yml
+- import_tasks: zfs.yml
   tags:
     - rslsync
-- include_tasks: rslsync.yml
+- import_tasks: rslsync.yml
   tags:
     - rslsync
-- include_tasks: pf.yml
+- import_tasks: pf.yml
   tags:
     - rslsync
