@@ -70,7 +70,14 @@ Dependencies
 Example Playbook
 ----------------
 
-    - import_role:
+    - hosts: all
+      become: true
+
+      vars:
+        ansible_python_interpreter: '/usr/local/bin/python2.7'
+        - import_role:
+            name: 'JoergFiedler.freebsd-jail-host'
+        - include_role:
             name: 'JoergFiedler.freebsd-jailed-rslsync'
           vars:
             jail_net_ip: '10.1.0.10'
