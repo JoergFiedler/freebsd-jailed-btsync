@@ -13,7 +13,7 @@ script:
 - ansible-lint .
 - yamllint .
 - ansible-galaxy install -p ./ -r .requirements.yml
-- vagrant box add JoergFiedler/FreeBSD-11.2 --provider aws
+- vagrant box add JoergFiedler/FreeBSD-11.3 --provider aws
 - vagrant up --provider aws
 - host=$(vagrant ssh-config |grep HostName |awk '{print $2}')
 - test $(curl -s -X GET -I -u admin:admin http://${host}:10080/gui/ -w %{http_code}
