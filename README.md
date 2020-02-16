@@ -72,9 +72,8 @@ Example Playbook
 
     - hosts: all
       become: true
-
-      vars:
-        ansible_python_interpreter: '/usr/local/bin/python2.7'
+    
+      tasks:
         - import_role:
             name: 'JoergFiedler.freebsd-jail-host'
         - include_role:
@@ -82,9 +81,8 @@ Example Playbook
           vars:
             jail_net_ip: '10.1.0.10'
             jail_name: 'rslsync'
-            jail_freebsd_release: '11.2-RELEASE'
             jail_build_server_enabled: yes
-            jail_build_server_url: 'http://vastland.moumantai.de/FreeBSD/packages/freebsd-11_2_x64-branches_2018Q4'
+            jail_build_server_url: 'http://vastland.moumantai.de/public/FreeBSD/packages/freebsd-12_1_x64-branches_2019Q4'
 
 License
 -------
