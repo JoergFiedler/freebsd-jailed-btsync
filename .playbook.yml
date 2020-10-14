@@ -10,4 +10,5 @@
         jail_net_ip: '10.1.0.10'
         jail_name: 'rslsync'
         jail_build_server_enabled: yes
-        jail_build_server_url: 'http://vastland.moumantai.de/public/FreeBSD/packages/freebsd-12_1_x64-branches_2019Q4'
+        jail_build_server_url: 'http://vastland.moumantai.de/public/FreeBSD/packages/freebsd-12_1_x64-branches_2020Q3'
+        rslsync_server_fqdn: 'localhost'

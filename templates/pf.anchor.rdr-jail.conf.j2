@@ -1,9 +1,14 @@
-rdr pass log on { {{ host_net_ext_if }} } proto { tcp, udp } \
+rdr pass log on {{ host_net_ext_if }} proto udp \
   from any \
-  to {{ host_net_ext_ip }} port {{ rslsync_port }} \
+  to { {{ host_net_ext_ips }} } port {{ rslsync_port }} \
   -> {{ jail_net_ip }}
 
-rdr pass log on { {{ host_net_ext_if }} } proto { tcp } \
+rdr pass log on {{ host_net_ext_if }} proto tcp \
   from any \
-  to {{ host_net_ext_ip }} port {{ rslsync_webui_port }} \
+  to { {{ host_net_ext_ips }} } port {{ rslsync_port }} \
+  -> {{ jail_net_ip }}
+
+rdr pass log on {{ host_net_ext_if }} proto tcp \
+  from any \
+  to { {{ host_net_ext_ips }} } port 443 \
   -> {{ jail_net_ip }}

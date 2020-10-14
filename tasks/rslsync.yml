@@ -17,8 +17,8 @@
   file:
     path: '{{ rslsync_home_host_zfs_dir }}/{{ item }}'
     state: directory
-    owner: 817
-    group: 817
+    owner: '817'
+    group: '817'
     mode: 0750
   loop:
     - 'sync'

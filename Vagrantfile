@@ -23,7 +23,7 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
   config.vm.provider 'virtualbox' do |vb, global|
     global.vm.network 'private_network', type: 'dhcp', auto_config: false
 
-    global.vm.network 'forwarded_port', guest: 10080, host: 10080
+    global.vm.network 'forwarded_port', guest: 80, host: 10080
     global.vm.network 'forwarded_port', guest: 10100, host: 10100
     global.vm.network 'forwarded_port', guest: 10100, host: 10100, protocol: 'udp'
 

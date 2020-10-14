@@ -3,20 +3,16 @@ freebsd-jailed-rslsync
 
 [![Build Status](https://travis-ci.org/JoergFiedler/freebsd-jailed-rslsync.svg?branch=master)](https://travis-ci.org/JoergFiedler/freebsd-jailed-rslsync)
 
-This role provides a jailed Resilio Sync instance.
+This role provides a jailed Resilio Sync instance. The host should be setup using 
 
-The free version of Resilio Sync is installed. On the host system a resilio dataset
-is create, if it not exist already. Within this dataset a dataset for this 
-specific instance is created as well. The web ui will be accessible on the 
-configured port. Use user `admin` is allowed to login. Please set an 
-encrypted password via `rslsync_webui_password_hash`. To create one please 
-type `openssl passwd -crypt PASSWORD`.
+The free version of Resilio Sync is installed. On the host system a resilio dataset is created, if it not exist already. 
+The web ui will be accessible via https. Please run `/usr/local/bin/acme-weekly.sh` and `/usr/local/bin/acme-deploy.sh` to get valid certificatess from Let' Encrypt.
 
 Requirements
 ------------
 
-This role is intent to be used with a fresh FreeBSD installation. There is a 
-Vagrant Box with providers for VirtualBox and EC2 you may use.
+This role is intent to be used with a fresh FreeBSD installation and [JoergFiedler.freebsd-jail-host](https://galaxy.ansible.com/JoergFiedler/freebsd-jail-host).
+There is a Vagrant Box with providers for VirtualBox and EC2 you may use.
 
 Role Variables
 --------------
@@ -42,17 +38,20 @@ Backup Resilio Sync instance's data using tarsnap. Default: '`false`'.
 
 Needs tarsnap enabled on the host system.
 
-##### rslsync_webui_login
-The user name allowed to login. Default: `'admin'`.
-
-##### rslsync_webui_password_hash
-The user's password hash. To create a password hash type `openssl passwd -crypt PASSWORD`. 
-Default: `'mfKUcqy7pdU4I'` (admin).
-
 ##### rslsync_webui_port
-The port for resilio's web ui. This is the hosts external port as well as the 
-port used by Resilio Sync within the jail. A pf rdr rule is created to redirect the 
-traffic to the jail. Default: `'10080'`.
+The port for resilio's web ui within the jail. Default: `'10080'`.
+
+##### rslsync_certificate_aliases
+Let's encrypt certificate aliases for webui. Default: `''`.
+
+##### rslsync_key_file
+NGINX ssl key file. Another new key file will be generated via acme.sh client. This one is just to allow NGINX to be started successfully after installation. Default: `'localhost-key.pem'`.
+
+##### rslsync_certbundle_file
+NGINX ssl cert bundle file. A new bundle file will be generated via acme.sh client. This one is just to allow NGINX to be started successfully after installation. Default: `'localhost-certbundle.pem'`.
+
+##### rslsync_dhparam_file
+SSL dh param file. There is a default one to allow easy setups, but make sure to provide unique one for every instance running. Default: `'localhost-dhparam.pem'`
 
 ##### host_zfs_rslsync_dataset
 The ZFS dataset for Resilio Sync on the host. 
@@ -65,7 +64,7 @@ Default: `'{{ host_srv_dir }}/rslsync'`.
 Dependencies
 ------------
 
-- [JoergFiedler.freebsd-jailed](https://galaxy.ansible.com/joergfiedler/freebsd-jailed)
+- [JoergFiedler.freebsd-jailed-nginx](https://galaxy.ansible.com/joergfiedler/freebsd-jailed-nginx)
 
 Example Playbook
 ----------------
@@ -82,7 +81,8 @@ Example Playbook
             jail_net_ip: '10.1.0.10'
             jail_name: 'rslsync'
             jail_build_server_enabled: yes
-            jail_build_server_url: 'http://vastland.moumantai.de/public/FreeBSD/packages/freebsd-12_1_x64-branches_2019Q4'
+            jail_build_server_url: 'http://vastland.moumantai.de/public/FreeBSD/packages/freebsd-12_1_x64-branches_2020Q4'
+            rslsync_server_fqdn: 'localhost'
 
 License
 -------
