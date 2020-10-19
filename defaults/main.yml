@@ -1,12 +1,18 @@
 ---
 # defaults file for freebsd-jailed-rslsync
-rslsync_device_name: 'default'
+rslsync_device_name: '{{ rslsync_server_fqdn }}'
 rslsync_home: '/srv/rslsync'
 rslsync_port: 10100
 rslsync_tarsnap_enabled: false
 rslsync_webui_login: 'admin'
 rslsync_webui_password_hash: 'mfKUcqy7pdU4I'
 rslsync_webui_port: 10080
+rslsync_certificate_aliases: ''
+rslsync_key_file: 'localhost-key.pem'
+rslsync_certbundle_file: 'localhost-certbundle.pem'
+rslsync_dhparam_file: 'localhost-dhparam.pem'
+rslsync_allow_tracker: 'false'
+rslsync_allow_relay: 'false'
 
 host_zfs_rslsync_dataset: '{{ host_srv_dataset }}/rslsync'
 host_zfs_rslsync_dir: '{{ host_srv_dir }}/rslsync'

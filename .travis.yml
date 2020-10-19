@@ -18,8 +18,7 @@ script:
   - vagrant box add JoergFiedler/FreeBSD-12 --provider aws
   - vagrant up --provider aws
   - host=$(vagrant ssh-config |grep HostName |awk '{print $2}')
-  - test $(curl -s -X GET -I -u admin:admin http://${host}:10080/gui/ -w %{http_code}
-    -o /dev/null) == "200"
+  - test $(curl --silent --insecure -I https://${host}/gui/ -w %{http_code} -o /dev/null) == "400"
   - nc -t -z -w 3 ${host} 10100
 after_script:
   - vagrant destroy -f

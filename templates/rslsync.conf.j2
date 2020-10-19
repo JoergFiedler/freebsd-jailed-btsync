@@ -2,20 +2,15 @@
   "device_name":     "{{ rslsync_device_name }}",
   "directory_root" : "{{ rslsync_home }}/sync",
 
-  "download_limit" : 0,
   "listening_port":  {{ rslsync_port }},
   "pid_file" : "/var/run/rslsync/rslsync.pid",
 
   "storage_path" : "{{ rslsync_home }}/.sync",
-  "upload_limit" : 0,
   "use_upnp" : false,
-
 
   "webui" :
   {
     "listen" : "{{ jail_net_ip }}:{{ rslsync_webui_port }}",
-    "login" : "{{ rslsync_webui_login }}",
-    "password_hash" : "{{ rslsync_webui_password_hash }}",
     "allow_empty_password" : false,
     "force_https" : false
   },
@@ -29,8 +24,6 @@
   "send_statistics": false,
   "bind_interface": "lo0",
   "use_only_bind_interface": true,
-  "free_space_warning_threshold": 512,
-  "folder_defaults.use_lan_broadcast": false,
-  "folder_defaults.use_relay" : false,
-  "folder_defaults.use_tracker" : false
+  "folder_defaults.use_relay" : {{ rslsync_allow_relay }},
+  "folder_defaults.use_tracker" : {{ rslsync_allow_tracker }}
 }

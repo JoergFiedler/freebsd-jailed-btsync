@@ -15,8 +15,30 @@ galaxy_info:
     - cloud
     - ec2
     - rslsync
-    - resilio
     - p2p
 allow_duplicates: yes
 dependencies:
-  - { role: 'JoergFiedler.freebsd-jailed', tags: ['rslsync'] }
+  - role: JoergFiedler.freebsd-jailed-nginx
+    vars:
+      nginx_pf_redirect: yes
+      nginx_letsencrypt_enabled: yes
+      nginx_syslogd_server: '{{ jail_net_ip }}'
+      nginx_tarsnap_enabled: no
+      nginx_worker_processes: 1
+      nginx_client_max_body_size: 64k
+      nginx_servers:
+        - aliases: '{{ rslsync_certificate_aliases }}'
+          force_https: yes
+          force_www: no
+          https:
+            enabled: yes
+            letsencrypt_enabled: yes
+            key_file: '{{ rslsync_key_file }}'
+            certbundle_file: '{{ rslsync_certbundle_file }}'
+            dhparam_file: '{{ rslsync_dhparam_file }}'
+          name: '{{ rslsync_server_fqdn }}'
+          proxy:
+            host: '{{ jail_net_ip }}'
+            scheme: 'http'
+            port: '{{ rslsync_webui_port }}'
+            local: yes
